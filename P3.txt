@@ -1,0 +1,44 @@
+use p3
+
+db.createCollection("mr")
+
+db.mr.insertMany([{name:"Ram",marks:40,age:20},{name:"siya",marks:50,age:20},{name:"swati",marks:30,age:18},{name:"Rahul",marks:50,age:21},{name:"Riya",marks:60,age:21}])
+
+var mapFun = function(){emit(this.age,this.marks)}
+
+var reduceFun = function(key,values){return Array.sum(values)}
+
+db.mr.mapReduce(mapFun,reduceFun,{'out':'result1'})
+
+db.result1.find()
+
+db.result1.find().sort({_id:1})
+db.result1.find().sort({value:1})
+
+
+///////////////////////////////////////////////
+
+db.createCollection("Agg")
+
+ db.Agg.insertMany([{item:"paste",amount:40,customer:"Mike"},{item:"guiter",amount:200,customer:"tom"},{item:"milk",amount:60,customer:"Mike"},{item:"pizza",amount:150,customer:"kiran"},{item:"paste",amount:40,customer:"kiran"},{item:"pizza",amount:150,customer:"devika"},{item:"paste",amount:40,customer:"Mike"},{item:"paste",amount:40,customer:"niraj"},{item:"guitar",amount:200,customer:"rina"},{item:"milk",amount:60,customer:"Mike"},{item:"pizza",amount:150,customer:"devika"},{item:"paste",amount:40,customer:"devika"},{item:"pizza",amount:150,customer:"kiran"},{item:"paste",amount:40,customer:"rina"}])
+ 
+ db.Agg.find()
+ 
+ db.Agg.aggregate([{$group:{_id:"$customer",total:{$sum:"$amount"}}}])
+ 
+ db.Agg.aggregate([{$group:{_id:"$customer",total:{$sum:1}}}])
+ db.Agg.aggregate([{$group:{_id:"$customer",Count:{$count:{}}}}])
+ 
+db.Agg.aggregate([{$group:{_id:"$customer",Average_purchased:{$avg:"$amount"}}}])
+
+db.Agg.aggregate([{$group:{_id:"$item",Average_purchased:{$avg:"$amount"}}}])
+
+db.Agg.aggregate([{$group:{_id:"$customer",min_purchased:{$min:"$amount"}}}])
+
+db.Agg.aggregate([{$group:{_id:"$customer",max_purchased:{$max:"$amount"}}}])
+
+db.Agg.aggregate([{$group:{_id:"$customer",first_purchased:{$first:"$amount"}}}])
+
+db.Agg.aggregate([{$group:{_id:"$customer",last_purchased:{$last:"$amount"}}}])
+ 
+ 

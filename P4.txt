@@ -1,0 +1,40 @@
+ use p4
+ 
+ db.createCollection("ind")
+ db.ind.insertMany([{cid:1,cname:"jon"},{cid:2,cname:"pooja"},{cid:3,cname:"anjali"},{cid:4},{cid:5,cname:"aniket"},{cid:6,cname:"rakesh"},{cname:"abc",hobies:["singing","swimming","dancing"]},{cname:"rushi",address:"Pune"}])
+ 
+ db.ind.createIndex({cid:1})
+ 
+ db.ind.createIndex({cid:-1,cname:1})
+ 
+ db.ind.getIndexes()
+ 
+ db.ind.dropIndex({cid:1})
+  
+ db.ind.dropIndex({cid:-1,cname:1})
+   
+ db.ind.getIndexes()
+	
+ db.ind.dropIndex({_id:1}) //not droped
+	 
+ db.ind.createIndex({cid:1},{unique:true}) //unable to create
+	 
+ db.ind.find()
+	  
+ db.ind.remove({cname:"rushi"})
+ db.ind.remove({cname:"abc"})
+		
+ db.ind.createIndex({cid:1},{unique:true})
+		
+ db.ind.insert({cid:1})  //duplicate key error collection
+		
+ db.ind.insert({cid:10})
+		
+ db.ind.createIndex({cid:1},{sparse:true})  //An existing index has the same name as the requested index.
+		
+ db.ind.dropIndex({cid:1})
+		
+ db.ind.createIndex({cid:1},{sparse:true})
+		 
+ db.ind.getIndexes()
+	 
